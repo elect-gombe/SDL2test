@@ -4,7 +4,7 @@
  */
 
 #include <stdint.h>
-#include "vector2.h"
+#include "vector2.hpp"
 
 typedef uint8_t color_t;
 
@@ -31,21 +31,46 @@ public:
   int init(int g);
   color_t *getvram(){ return vram;   }
   void flush();
+  void delay(int ms){SDL_Delay(ms);}
+  void close();
 };
 
 class graphiclib :public graphicSDL{
 private:
   vector2 pv;
-  color_t brushcolor;
-  color_t backcolor;
+  color_t strokecolor;
+  color_t fillcolor;
+  const uint8_t *fontp;
+  unsigned int fontexpa;
+  unsigned int fontsize;
+  inline uint8_t get_fontwidth();
+  inline uint8_t get_fontheight();
+  const uint8_t *get_font(char code);
+  int calc_seq_code(vector2 c);
+  int calc_intsec_x( vector2 c0, vector2 c1, int clip_x, vector2& c );
+  int calc_intsec_y( vector2 c0, vector2 c1, int clip_y, vector2& c );
+  int calc_clipped_point( int code, vector2 c0, vector2 c1, vector2& c );
 public:
   graphiclib(int w,int h): graphicSDL(w,h) {}
-  void setbrush(color_t col){brushcolor = col;}
-  void drawLine(const vector2& v){drawLine(v,pv);pv=v;}
-  void drawLine(const vector2& v1,const vector2& v2);
-  void drawLine(vector2& v1,vector2& v2);
-  void putdot(const vector2& v);
-  void putdot(int x,int y);
-  void drawcircle(const vector2& vin,int r);
+  void setbrush(color_t col){strokecolor = col;}
+  void setfill(color_t col){fillcolor = col;}
+  void Line(const vector2& v){Line(v,pv);pv=v;}
+  void Line(vector2 v1,vector2 v2);
+  inline void putdot(const vector2& v);
+  inline void putdot(int x,int y);
+  inline void putsubdot(const vector2& v);
+  inline void putsubdot(int x,int y);
+  void circle(const vector2& vin,int r);
+  void fillcircle(const vector2& vin,int r);
+  inline void Hline(int x,int y,int w);
+  inline void Hlinefill(int x,int y,int w);
+  int clipping( vector2& c0, vector2& c1 );
+
+  
+  int textSize(int size);
+  void drawFont(const vector2 &v,char m);
+  void print_string(const char *str);
+  void setPoint(vector2 v);
+  void screenclear(void);
 };
 

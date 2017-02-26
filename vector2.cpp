@@ -1,5 +1,5 @@
-#include "vector2.h"
-
+#include "vector2.hpp"
+#include <stdio.h>
 vector2::vector2(){
   x=0;
   y=0;
@@ -49,6 +49,15 @@ vector2 operator+(const vector2& v1,const vector2& v2){
   return w;
 }
 
+vector2 operator*(const vector2& v1,int n){
+  vector2 w;
+
+  w.x = v1.x*n;
+  w.y = v1.y*n;
+
+  return w;
+}
+
 vector2 operator-(const vector2& v1,const vector2& v2){
   vector2 w;
 
@@ -68,8 +77,10 @@ vector2& vector2::operator*=(int m){
   return *this;
 }
 
-#ifdef _STRFUNC
 void vector2::print(void){
+#ifdef _STRFUNC
   xprintf("(%d,%d)\n",x,y);
-}
+#else
+  printf("(%d,%d)\n",x,y);
 #endif
+}

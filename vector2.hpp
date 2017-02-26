@@ -19,6 +19,7 @@ public:
 };
 
 vector2 operator+(const vector2& v1,const vector2& v2);
+vector2 operator*(const vector2& v1,int n);
 vector2 operator-(const vector2& v1,const vector2& v2);
 
 #endif
