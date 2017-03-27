@@ -3,78 +3,15 @@
 #include "graphiclib.hpp"
 #include <assert.h>
 
-template <typename T>
-T min(T v1 , T v2) {
-  if (v1 < v2) return v1;
-  else return v2;
-}
-
-template <typename T>
-T abs(T v) {
-  if (v > 0) return v;
-  else return -v;
-}
-
-template <typename T>
-T max(T v1 , T v2) {
-  if (v1 > v2) return v1;
-  else return v2;
+void graphiclib::screenclear(void){
+  setbrush(0);
+  for(int i=0;i<height;i++){
+    Hline(0,i,width);
+  }
 }
 
 void graphiclib::setPoint(vector2 v){
   pv = v;
-}
-
-inline void graphiclib::Hline(int x,int y,int w){
-  assert(y >= 0 && y < height);
-  assert(x >= 0 && x+w < width);
-  
-  for(int i=0;i<w;i++){
-    vram[y*width+x+i] = strokecolor;
-  }
-}
-
-inline void graphiclib::Hlinefill(int x,int y,int w){
-  assert(0 >= y && y < height);
-  assert(0 >= x && x+w < width);
-  for(int i=0;i<w;i++){
-    vram[y*width+x+i] = fillcolor;
-  }
-}
-
-void graphiclib::screenclear(void){
-  setbrush(0);
-  for(int i=0;i<height;i++){
-    Hline(0,i,width-1);
-  }
-}
-
-inline void graphiclib::putsubdot(int x,int y){
-  assert(x >= 0&&x < width);
-  assert(y >= 0&&y < height);
-  if(fillcolor!=255){
-    vram[y*width+x] = fillcolor;
-  }
-}
-
-inline void graphiclib::putsubdot(const vector2& v){
-  assert(v.x >= 0&&v.x < width);
-  assert(v.y >= 0&&v.y < height);
-  if(fillcolor!=255){
-    vram[v.y*width+v.x] = fillcolor;
-  }
-}
-
-inline void graphiclib::putdot(int x,int y){
-  assert(x >= 0&&x < width);
-  assert(y >= 0&&y < height);
-  vram[y*width+x] = strokecolor;
-}
-
-inline void graphiclib::putdot(const vector2& v){
-  assert(v.x >= 0&&v.x < width);
-  assert(v.y >= 0&&v.y < height);
-  vram[v.y*width+v.x] = strokecolor;
 }
 
 
@@ -209,6 +146,13 @@ int graphiclib::clipping( vector2& c0, vector2& c1 ){
       return -1;
 
   return 1;
+}
+
+void graphiclib::Line(const vector3 &vin1,const vector3 &vin2){
+  vector2 v1,v2;
+  v1.x = vin1.x; v1.y = vin1.y;
+  v2.x = vin2.x; v2.y = vin2.y;
+  Line(v1,v2);
 }
 
 void graphiclib::Line(vector2 vin1,vector2 vin2){

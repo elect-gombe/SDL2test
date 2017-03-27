@@ -2,6 +2,15 @@
 #define __VECTOR3_H
 #include <stdint.h>
 
+inline
+int sqrt2(int f);
+
+struct vector3_t{
+  int x;
+  int y;
+  int z;
+};
+
 class vector3{
 public:
   int x;
@@ -11,6 +20,11 @@ public:
     this->x = x;
     this->y = y;
     this->z = z;
+  }
+  vector3(const vector3_t& v){
+    this->x = v.x;
+    this->y = v.y;
+    this->z = v.z;
   }
   vector3(int x,int y){
     this->x = x;
@@ -51,7 +65,7 @@ public:
     v.z = -this->z;
     return v;
   }
-  int abs();
+  unsigned int abs();
   void print();
 };
 
@@ -73,6 +87,11 @@ vector3 operator+(const vector3 &v1,const vector3& v2){
   w.y = v1.y+v2.y;
   w.z = v1.z+v2.z;
   return w;
+}
+
+static inline
+int operator*(const vector3 &v1,const vector3 &v2){
+  return (int64_t)v1.x*v2.x/65536+(int64_t)v1.y*v2.y/65536+(int64_t)v1.z*v2.z/65536;
 }
 
 static inline

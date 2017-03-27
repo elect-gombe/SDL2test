@@ -6,10 +6,12 @@
 Matrix4 loadPerspective(int fovy, int aspect,int zNear, int zFar,int width,int height){
   Matrix4 m;
   const int dz(zFar - zNear);
+  (void)width;
+  (void)height;
 
   if (dz != 0.0f) {
     m.m[ 5] = int(65536 / tan(fovy*3.1415926535898/65536));
-    m.m[ 0] = m.m[5]*120/160;
+    m.m[ 0] = (int64_t)m.m[5]*aspect/65536;
     m.m[10] = -int64_t(zFar + zNear) *65536 / dz;
     m.m[11] = -65536;
     m.m[14] = (int64_t)(-65536)*2 * zFar/65536 * zNear / dz;

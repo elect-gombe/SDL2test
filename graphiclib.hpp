@@ -5,6 +5,26 @@
 
 #include <stdint.h>
 #include "vector2.hpp"
+#include "vector3.hpp"
+#include <assert.h>
+
+template <typename T>
+T min(T v1 , T v2) {
+  if (v1 < v2) return v1;
+  else return v2;
+}
+
+template <typename T>
+T abs(T v) {
+  if (v > 0) return v;
+  else return -v;
+}
+
+template <typename T>
+T max(T v1 , T v2) {
+  if (v1 > v2) return v1;
+  else return v2;
+}
 
 typedef uint8_t color_t;
 
@@ -28,6 +48,7 @@ public:
   ~graphicSDL(){
     delete[] vram;
   }
+  int getheight(){return height;}
   int init(int g);
   color_t *getvram(){ return vram;   }
   void flush();
@@ -56,6 +77,7 @@ public:
   void setfill(color_t col){fillcolor = col;}
   void Line(const vector2& v){Line(v,pv);pv=v;}
   void Line(vector2 v1,vector2 v2);
+  void Line(const vector3 &vin1,const vector3 &vin2);
   inline void putdot(const vector2& v);
   inline void putdot(int x,int y);
   inline void putsubdot(const vector2& v);
@@ -65,7 +87,6 @@ public:
   inline void Hline(int x,int y,int w);
   inline void Hlinefill(int x,int y,int w);
   int clipping( vector2& c0, vector2& c1 );
-
   
   int textSize(int size);
   void drawFont(const vector2 &v,char m);
@@ -74,3 +95,48 @@ public:
   void screenclear(void);
 };
 
+
+inline void graphiclib::Hline(int x,int y,int w){
+  assert(y >= 0 && y < height);
+  assert(x >= 0 && x+w <= width);
+  
+  for(int i=0;i<w;i++){
+    vram[y*width+x+i] = strokecolor;
+  }
+}
+
+inline void graphiclib::Hlinefill(int x,int y,int w){
+  assert(0 >= y && y < height);
+  assert(0 >= x && x+w < width);
+  for(int i=0;i<w;i++){
+    vram[y*width+x+i] = fillcolor;
+  }
+}
+
+inline void graphiclib::putsubdot(int x,int y){
+  assert(x >= 0&&x < width);
+  assert(y >= 0&&y < height);
+  if(fillcolor!=255){
+    vram[y*width+x] = fillcolor;
+  }
+}
+
+inline void graphiclib::putsubdot(const vector2& v){
+  assert(v.x >= 0&&v.x < width);
+  assert(v.y >= 0&&v.y < height);
+  if(fillcolor!=255){
+    vram[v.y*width+v.x] = fillcolor;
+  }
+}
+
+inline void graphiclib::putdot(int x,int y){
+  assert(x >= 0&&x < width);
+  assert(y >= 0&&y < height);
+  vram[y*width+x] = strokecolor;
+}
+
+inline void graphiclib::putdot(const vector2& v){
+  assert(v.x >= 0&&v.x < width);
+  assert(v.y >= 0&&v.y < height);
+  vram[v.y*width+v.x] = strokecolor;
+}

@@ -3,7 +3,7 @@
 #include <iostream>
 
 /*This is fast calculation modules.*/
-static inline
+inline
 int sqrt2(int f) {
   int s = f,t;
   
@@ -17,7 +17,7 @@ int sqrt2(int f) {
   return t<<8;
 }
 
-int vector3::abs(){
+unsigned int vector3::abs(){
   return sqrt2(int64_t(x)*x/65536+int64_t(y)*y/65536+int64_t(z)*z/65536);
 }
 
