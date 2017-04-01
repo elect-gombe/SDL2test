@@ -7,6 +7,14 @@
 #include "vector2.hpp"
 #include "vector3.hpp"
 #include <assert.h>
+#include <SDL2/SDL.h>
+
+extern int frame;
+const static int window_width = 256;
+const static int window_height = 220;
+
+extern const int window_width;
+extern const int window_height;
 
 template <typename T>
 T min(T v1 , T v2) {
@@ -140,3 +148,5 @@ inline void graphiclib::putdot(const vector2& v){
   assert(v.y >= 0&&v.y < height);
   vram[v.y*width+v.x] = strokecolor;
 }
+int isKeyPressed();
+int getkey();

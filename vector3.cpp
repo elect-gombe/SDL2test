@@ -22,5 +22,5 @@ unsigned int vector3::abs(){
 }
 
 void vector3::print(){
-  // std::cout <<"(" << x/65536.<<","<<y/65536.<<","<<z/65536.<<")"<<std::endl;
+  std::cout <<"(" << x/65536.<<","<<y/65536.<<","<<z/65536.<<")"<<std::endl;
 }

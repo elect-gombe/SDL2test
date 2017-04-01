@@ -114,4 +114,21 @@ vector3 operator-(const vector3 &v1,const vector3& v2){
   return w;
 }
 
+inline
+vector3 calc_nv(const vector3 v[3]){
+  vector3 n;
+  int abs_n;
+  int rabs;
+
+  n = cross(v[1]-v[0],v[2]-v[0]);
+  abs_n = n.abs();
+
+  rabs = 4294967295/abs_n;
+  n.x = (int64_t)n.x * rabs / 65536;
+  n.y = (int64_t)n.y * rabs / 65536;
+  n.z = (int64_t)n.z * rabs / 65536;
+
+  return n;
+}
+
 #endif

@@ -25,12 +25,9 @@ Matrix4 lookat(vector3 goal,vector3 eye){
 
   vector3 t,r,s;
   t=eye-goal;
-  r=cross(vector3(0,65536,0),t);
+  r=cross(vector3(0,-65536,0),t);
   s=cross(t,r);
 
-  s.print();
-  r.print();
-  t.print();
   int rs,ss,ts;
   rs = r.abs();
   ss = s.abs();
@@ -113,6 +110,13 @@ Matrix4 magnify(int n){
   return Matrix4(65536*n,0,0,0,
 		 0,65536*n,0,0,
 		 0,0,65536*n,0,
+		 0,0,0,65536);
+}
+
+Matrix4 magnify_y(int n){
+  return Matrix4(65536,0,0,0,
+		 0,n,0,0,
+		 0,0,65536,0,
 		 0,0,0,65536);
 }
 

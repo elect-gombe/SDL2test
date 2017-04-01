@@ -159,3 +159,4 @@ Matrix4 operator*(const Matrix4& m,const Matrix4& n) {
 Matrix4 loadPerspective(int fovy, int aspect,int zNear, int zFar,int width,int height);
 Matrix4 magnify(int n);
 Matrix4 lookat(vector3 eye,vector3 goal);
+Matrix4 magnify_y(int n);
